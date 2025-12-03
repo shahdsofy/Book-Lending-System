@@ -1,8 +1,7 @@
-# Book Lending System
 # 📚 Book Lending System API
 
 A RESTful API for a **Book Lending System** where users can register, log in, and borrow or return books from a shared catalog.  
-This project is built using **Clean Architecture** principles and modern **ASP.NET Core** technologies.
+This project is built using **Clean Architecture**, **CQRS**, and **MediatR** with modern **ASP.NET Core** technologies.
 
 ---
 
@@ -10,6 +9,9 @@ This project is built using **Clean Architecture** principles and modern **ASP.N
 
 - ✅ ASP.NET Core Web API
 - ✅ Clean Architecture
+- ✅ CQRS (Command Query Responsibility Segregation)
+- ✅ MediatR
+- ✅ Fluent Validation
 - ✅ Entity Framework Core
 - ✅ SQL Server
 - ✅ ASP.NET Core Identity
@@ -23,13 +25,29 @@ This project is built using **Clean Architecture** principles and modern **ASP.N
 
 ## 🏗️ Project Architecture
 
-The project follows **Clean Architecture**, divided into the following layers:
+The project follows **Clean Architecture** combined with **CQRS & MediatR**, divided into the following layers:
 
 - **Domain** → Core business entities & interfaces  
-- **Application** → Business logic, services & DTOs  
+- **Application** → Commands, Queries, Handlers, DTOs & Business Logic  
 - **Infrastructure** → Database, Identity, Repositories, Hangfire  
 - **API** → Controllers & Endpoints  
 - **Tests** → Unit Tests using XUnit & NSubstitute  
+
+---
+
+## 🔄 CQRS & MediatR Implementation
+
+- ✅ Commands handle:
+  - Create, Update, Delete operations
+- ✅ Queries handle:
+  - Read-only operations
+- ✅ All requests pass through **MediatR**
+- ✅ Controllers do **not** directly call services
+- ✅ Improves:
+  - Separation of concerns
+  - Scalability
+  - Testability
+  - Maintainability
 
 ---
 
@@ -75,4 +93,20 @@ The project follows **Clean Architecture**, divided into the following layers:
 - ✅ Auto-generated documentation
 - ✅ Full API testing via browser
 
-URL after running the project:
+books
+
+📌 Project Highlights
+
+✅ Clean Code & SOLID Principles
+
+✅ CQRS & MediatR Pattern Implementation
+
+✅ Secure authentication & authorization
+
+✅ Background jobs with Hangfire
+
+✅ Fully documented APIs via Swagger
+
+✅ Strong test coverage using Unit Tests
+
+✅ Scalable & Maintainable architecture
