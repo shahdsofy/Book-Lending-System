@@ -94,6 +94,7 @@ The project follows **Clean Architecture** combined with **CQRS & MediatR**, div
 - ✅ Full API testing via browser
 
 
+---
 
 ### 📌 Project Highlights
 
@@ -111,7 +112,7 @@ The project follows **Clean Architecture** combined with **CQRS & MediatR**, div
 
 ✅ Scalable & Maintainable architecture
 
----------------------------------------------------------------
+---
 
 
 
