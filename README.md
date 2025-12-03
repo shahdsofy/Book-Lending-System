@@ -1,1 +1,78 @@
 # Book Lending System
+# 📚 Book Lending System API
+
+A RESTful API for a **Book Lending System** where users can register, log in, and borrow or return books from a shared catalog.  
+This project is built using **Clean Architecture** principles and modern **ASP.NET Core** technologies.
+
+---
+
+## 🚀 Technologies & Tools
+
+- ✅ ASP.NET Core Web API
+- ✅ Clean Architecture
+- ✅ Entity Framework Core
+- ✅ SQL Server
+- ✅ ASP.NET Core Identity
+- ✅ AutoMapper
+- ✅ Hangfire (Background Jobs)
+- ✅ Swagger (API Documentation)
+- ✅ XUnit & NSubstitute (Unit Testing)
+- ✅ In-Memory Database for Testing
+
+---
+
+## 🏗️ Project Architecture
+
+The project follows **Clean Architecture**, divided into the following layers:
+
+- **Domain** → Core business entities & interfaces  
+- **Application** → Business logic, services & DTOs  
+- **Infrastructure** → Database, Identity, Repositories, Hangfire  
+- **API** → Controllers & Endpoints  
+- **Tests** → Unit Tests using XUnit & NSubstitute  
+
+---
+
+## 🔐 Core Features
+
+### 1️⃣ User Authentication
+- Register & Login using **ASP.NET Core Identity**
+- Role-based authorization:
+  - **Admin**
+  - **Member**
+
+---
+
+### 2️⃣ Book Catalog Management
+- ✅ Admin can:
+  - Add books
+  - Update books
+  - Delete books
+- ✅ Members can:
+  - View available books
+  - Search books
+
+---
+
+### 3️⃣ Book Borrowing System
+- ✅ Members can:
+  - Borrow **one book at a time**
+  - Return borrowed books
+- ✅ Due Date:
+  - Automatically set to **7 days** after borrowing
+- ✅ Book availability updates automatically
+
+---
+
+### 4️⃣ Hangfire Background Job
+- ✅ Runs **daily**
+- ✅ Checks overdue borrowed books
+- ✅ Sends reminders (via logs or simulated email)
+
+---
+
+### 5️⃣ Swagger API Documentation
+- ✅ Auto-generated documentation
+- ✅ Full API testing via browser
+
+URL after running the project:
