@@ -93,7 +93,6 @@ The project follows **Clean Architecture** combined with **CQRS & MediatR**, div
 - ✅ Auto-generated documentation
 - ✅ Full API testing via browser
 
-books
 
 📌 Project Highlights
 
@@ -110,3 +109,12 @@ books
 ✅ Strong test coverage using Unit Tests
 
 ✅ Scalable & Maintainable architecture
+------------------------------------------
+
+
+
+
+
+
+
+
