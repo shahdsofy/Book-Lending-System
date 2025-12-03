@@ -1,0 +1,23 @@
+﻿using Book_Lending_System.Application.Features.Identity.Commands.Models;
+using FluentValidation;
+
+namespace Book_Lending_System.Application.Features.Identity.Commands.Validators
+{
+    public class LoginValidator:AbstractValidator<LoginCommand>
+    {
+        public LoginValidator()
+        {
+            ApplyValidationRules();
+        }
+        public void ApplyValidationRules()
+        {
+            RuleFor(x => x.LoginDTO.Email)
+                .NotEmpty().WithMessage("Email is required.")
+                .EmailAddress().WithMessage("A valid email address is required.");
+
+            RuleFor(x => x.LoginDTO.Password)
+                .NotEmpty().WithMessage("Password is required.")
+                ;
+        }
+    }
+}

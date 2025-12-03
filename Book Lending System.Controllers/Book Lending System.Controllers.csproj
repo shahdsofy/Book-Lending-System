@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>Book_Lending_System.Controllers</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="13.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Book Lending System.Application.Abstraction\Book Lending System.Application.Abstraction.csproj" />
+    <ProjectReference Include="..\Book Lending System.Application\Book Lending System.Application.csproj" />
+    <ProjectReference Include="..\Book Lending System.Shared\Book Lending System.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

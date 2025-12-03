@@ -1,0 +1,6 @@
+@Book_Lending_System.APIs_HostAddress = http://localhost:5064
+
+GET {{Book_Lending_System.APIs_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

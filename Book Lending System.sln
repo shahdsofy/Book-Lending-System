@@ -1,0 +1,100 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36511.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Book Lending System.APIs", "Book Lending System.APIs\Book Lending System.APIs.csproj", "{A9EC80C0-748B-4745-89AA-B372816B8194}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Book Lending System.Domain", "Book Lending System.Core\Book Lending System.Domain.csproj", "{B83A00D0-0158-4346-AD3C-577202DAB51D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Book Lending System.Infrastructure", "Book Lending System.Infrastructure\Book Lending System.Infrastructure.csproj", "{AEFCA4E4-9B47-4342-85DC-35504FBAD78F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Book Lending System.Shared", "Book Lending System.Shared\Book Lending System.Shared.csproj", "{4568CC9C-E3C0-4ED3-8924-8345D933B7E2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{33C2BD22-C04D-4DA0-B841-2B7AF2ABE7F7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIs", "APIs", "{C493853C-EC47-4F6B-9C7D-702157CE401C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{69CCD679-6006-450A-BE81-FCFBD2B622AE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{34DACE64-7CC9-4AEF-9592-688057237C62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Book Lending System.Application", "Book Lending System.Application\Book Lending System.Application.csproj", "{A4516569-441D-4AB5-9351-D0F8BEA3977D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Book Lending System.Application.Abstraction", "Book Lending System.Application.Abstraction\Book Lending System.Application.Abstraction.csproj", "{81AC83F7-06ED-4DBB-B93A-7C76E34B9F1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Book Lending System.Infrastructure.Persistence", "Book Lending System.Infrastructure.Persistence\Book Lending System.Infrastructure.Persistence.csproj", "{0451BE9A-8F6B-4D96-BA9A-3DF5001A4DCB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{967798CD-CFE5-4A7E-B49F-03DEC17656B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Book Lending System.Controllers", "Book Lending System.Controllers\Book Lending System.Controllers.csproj", "{A6F01E02-ACFE-456B-8229-C01E675F28BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Book Lending System.Tests", "Book Lending System.Tests\Book Lending System.Tests.csproj", "{250F91BC-42AA-4B1D-AE74-2585B523FE1B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A9EC80C0-748B-4745-89AA-B372816B8194}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9EC80C0-748B-4745-89AA-B372816B8194}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9EC80C0-748B-4745-89AA-B372816B8194}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9EC80C0-748B-4745-89AA-B372816B8194}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B83A00D0-0158-4346-AD3C-577202DAB51D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B83A00D0-0158-4346-AD3C-577202DAB51D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B83A00D0-0158-4346-AD3C-577202DAB51D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B83A00D0-0158-4346-AD3C-577202DAB51D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEFCA4E4-9B47-4342-85DC-35504FBAD78F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEFCA4E4-9B47-4342-85DC-35504FBAD78F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEFCA4E4-9B47-4342-85DC-35504FBAD78F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEFCA4E4-9B47-4342-85DC-35504FBAD78F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4568CC9C-E3C0-4ED3-8924-8345D933B7E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4568CC9C-E3C0-4ED3-8924-8345D933B7E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4568CC9C-E3C0-4ED3-8924-8345D933B7E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4568CC9C-E3C0-4ED3-8924-8345D933B7E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4516569-441D-4AB5-9351-D0F8BEA3977D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4516569-441D-4AB5-9351-D0F8BEA3977D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4516569-441D-4AB5-9351-D0F8BEA3977D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4516569-441D-4AB5-9351-D0F8BEA3977D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81AC83F7-06ED-4DBB-B93A-7C76E34B9F1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81AC83F7-06ED-4DBB-B93A-7C76E34B9F1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81AC83F7-06ED-4DBB-B93A-7C76E34B9F1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81AC83F7-06ED-4DBB-B93A-7C76E34B9F1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0451BE9A-8F6B-4D96-BA9A-3DF5001A4DCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0451BE9A-8F6B-4D96-BA9A-3DF5001A4DCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0451BE9A-8F6B-4D96-BA9A-3DF5001A4DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0451BE9A-8F6B-4D96-BA9A-3DF5001A4DCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6F01E02-ACFE-456B-8229-C01E675F28BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6F01E02-ACFE-456B-8229-C01E675F28BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6F01E02-ACFE-456B-8229-C01E675F28BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6F01E02-ACFE-456B-8229-C01E675F28BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{250F91BC-42AA-4B1D-AE74-2585B523FE1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{250F91BC-42AA-4B1D-AE74-2585B523FE1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{250F91BC-42AA-4B1D-AE74-2585B523FE1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{250F91BC-42AA-4B1D-AE74-2585B523FE1B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A9EC80C0-748B-4745-89AA-B372816B8194} = {C493853C-EC47-4F6B-9C7D-702157CE401C}
+		{B83A00D0-0158-4346-AD3C-577202DAB51D} = {69CCD679-6006-450A-BE81-FCFBD2B622AE}
+		{AEFCA4E4-9B47-4342-85DC-35504FBAD78F} = {34DACE64-7CC9-4AEF-9592-688057237C62}
+		{4568CC9C-E3C0-4ED3-8924-8345D933B7E2} = {967798CD-CFE5-4A7E-B49F-03DEC17656B8}
+		{C493853C-EC47-4F6B-9C7D-702157CE401C} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{69CCD679-6006-450A-BE81-FCFBD2B622AE} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{34DACE64-7CC9-4AEF-9592-688057237C62} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{A4516569-441D-4AB5-9351-D0F8BEA3977D} = {69CCD679-6006-450A-BE81-FCFBD2B622AE}
+		{81AC83F7-06ED-4DBB-B93A-7C76E34B9F1A} = {69CCD679-6006-450A-BE81-FCFBD2B622AE}
+		{0451BE9A-8F6B-4D96-BA9A-3DF5001A4DCB} = {34DACE64-7CC9-4AEF-9592-688057237C62}
+		{967798CD-CFE5-4A7E-B49F-03DEC17656B8} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{A6F01E02-ACFE-456B-8229-C01E675F28BF} = {C493853C-EC47-4F6B-9C7D-702157CE401C}
+		{250F91BC-42AA-4B1D-AE74-2585B523FE1B} = {33C2BD22-C04D-4DA0-B841-2B7AF2ABE7F7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7B27651F-373D-4056-87EA-CCE5D18CD73A}
+	EndGlobalSection
+EndGlobal
