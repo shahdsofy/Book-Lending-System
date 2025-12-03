@@ -109,7 +109,8 @@ The project follows **Clean Architecture** combined with **CQRS & MediatR**, div
 ✅ Strong test coverage using Unit Tests
 
 ✅ Scalable & Maintainable architecture
-------------------------------------------
+
+---------------------------------------------------------------
 
 
 
