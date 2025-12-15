@@ -33,7 +33,6 @@ namespace Book_Lending_System.Infrastructure.Persistence
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 
 
-           // services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CustomSaveChangesInterceptors));
 
 
             return services;

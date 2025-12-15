@@ -30,13 +30,7 @@ namespace Book_Lending_System.APIs
           
             var app = builder.Build();
 
-            //var recurringJobs = app.Services.GetRequiredService<IRecurringJobManager>();
-
-            //recurringJobs.AddOrUpdate<OverdueBooksService>(
-            //    "check-overdue-books",
-            //    job => job.ProcessOverdueBooksAsync(),
-            //    Cron.Daily);
-
+           
 
             await app.InitializeDatabaseAsync();
 

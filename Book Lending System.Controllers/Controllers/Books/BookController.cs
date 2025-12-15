@@ -44,9 +44,10 @@ namespace Book_Lending_System.Controllers.Controllers.Books
         }
 
         [HttpGet("GetAll")]
-        public IActionResult GetAllBooks()
+        
+        public async Task<IActionResult> GetAllBooks()
         {
-            var result = mediator.Send(new GetAllQuery());
+            var result = await mediator.Send(new GetAllQuery());
             return Ok(result);
         }
         [HttpGet("GetBook")]

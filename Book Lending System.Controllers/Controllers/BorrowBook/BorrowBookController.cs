@@ -18,7 +18,7 @@ namespace Book_Lending_System.Controllers.Controllers.BorrowBook
 
 
         [HttpPost("BorrowBook")]
-        [Authorize]
+        [Authorize(Roles ="Member")]
         public async Task<IActionResult> BorrowBook(int BookId)
         {
             var result = await mediator.Send(new BorrowBookCommand { BookId= BookId });
@@ -26,7 +26,7 @@ namespace Book_Lending_System.Controllers.Controllers.BorrowBook
         }
 
         [HttpPost("ReturnBook")]
-        [Authorize]
+        [Authorize(Roles = "Member")]
         public  async Task<IActionResult> ReturnBook(int BookId)
         {
             var result = await mediator.Send(new ReturnBookCommand { BookId = BookId });

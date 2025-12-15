@@ -20,12 +20,13 @@ namespace Book_Lending_System.APIs.Extensions
                 
                 try
                 {
-                    recurringJobs.AddOrUpdate<OverdueBooksService>("check-overdue-books",
-                    job => job.ProcessOverdueBooksAsync(),
-                    Cron.Daily);
 
                     await initializer.InitializeAsync();
                     await initializer.SeedAsync();
+
+                    recurringJobs.AddOrUpdate<OverdueBooksService>("check-overdue-books",
+                    job => job.ProcessOverdueBooksAsync(),
+                    Cron.Daily);
                 }
                 catch (Exception ex)
                 {

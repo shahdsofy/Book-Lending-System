@@ -32,15 +32,6 @@ namespace Book_Lending_System.APIs.Extensions
 
 
 
-
-
-
-
-
-
-
-
-
             services.AddScoped(typeof(ILoggedInUserService),typeof(LoggedInUserService));
             return services;
         }

@@ -17,9 +17,9 @@ namespace Book_Lending_System.Application.Features.Books.Queries.Handlers
         {
             this.bookService = bookService;
         }
-        public Response<IEnumerable<BookDTO>> Handle(GetAllQuery request, CancellationToken cancellationToken)
+        public async Task<Response<IEnumerable<BookDTO>>> Handle(GetAllQuery request, CancellationToken cancellationToken)
         {
-            return  bookService.GetAllBooksAsync();
+            return await bookService.GetAllBooksAsync();
         }
 
         public async Task<Response<BookDTO>> Handle(GetBookQuery request, CancellationToken cancellationToken)
@@ -27,9 +27,6 @@ namespace Book_Lending_System.Application.Features.Books.Queries.Handlers
             return await bookService.GetBookByIdAsync(request.BookId);
         }
 
-        async Task<Response<IEnumerable<BookDTO>>> IRequestHandler<GetAllQuery, Response<IEnumerable<BookDTO>>>.Handle(GetAllQuery request, CancellationToken cancellationToken)
-        {
-            return  bookService.GetAllBooksAsync();
-        }
+       
     }
 }

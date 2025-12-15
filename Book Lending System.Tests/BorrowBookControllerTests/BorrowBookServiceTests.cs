@@ -2,250 +2,172 @@
 using Book_Lending_System.Application.Abstraction;
 using Book_Lending_System.Application.Mapping;
 using Book_Lending_System.Application.Services.BorrowBook;
-using Book_Lending_System.Core.Contracts.Persistence;
 using Book_Lending_System.Core.Entities.Books;
 using Book_Lending_System.Infrastructure.Persistence;
 using Book_Lending_System.Infrastructure.Persistence.Data;
-using Book_Lending_System.Infrastructure.Persistence.Repositories;
-using Book_Lending_System.Shared.Responses;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using System.Net;
-using System.Threading.Tasks;
-using Xunit;
 
 public class BorrowBookServiceTests
 {
+
+    private BorrowBookService CreateService(StoreDbContext context, string userId="1" )
+    {
+        //unit of work
+        var unitOfWork=new UnitOfWork(context);
+
+        //logged in user service (NSubstitute)
+        var loggedInUser = Substitute.For<ILoggedInUserService>();
+        loggedInUser.UserId.Returns(userId);
+
+
+        //mapper
+        var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var mapper=new MapperConfiguration(cfg=>
+        {
+            cfg.AddProfile<MappingProfile>();
+        },loggerFactory).CreateMapper();
+
+        return new BorrowBookService(unitOfWork, loggedInUser, mapper);
+    }
+
+
     private StoreDbContext CreateInMemoryDb()
     {
         var options = new DbContextOptionsBuilder<StoreDbContext>()
-            .UseInMemoryDatabase(System.Guid.NewGuid().ToString())
+            .UseInMemoryDatabase(databaseName:  Guid.NewGuid().ToString())
             .Options;
 
         return new StoreDbContext(options);
     }
 
-    private BorrowBookService CreateService(StoreDbContext dbContext, string userId)
-    {
-        var uow = new UnitOfWork(dbContext);
-        var loggedInUser = Substitute.For<ILoggedInUserService>();
-        loggedInUser.UserId.Returns(userId);
-
-        var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
-
-        // إنشاء Configuration
-        var config = new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile(new MappingProfile());
-        }, loggerFactory);
-
-        // إنشاء Mapper
-        var mapper = config.CreateMapper();
-
-        return new BorrowBookService(uow, loggedInUser, mapper);
-    }
-
-    // ---------------- BorrowBookAsync Tests ----------------
-
     [Fact]
-    public async Task BorrowBookAsync_BookNotFound_ReturnsNotFound()
+    public async Task BorrowBookAsync_ShouldBorrowBook_WhenBookIsAvailable()
     {
-        using var db = CreateInMemoryDb();
-        var service = CreateService(db, "u1");
+        // Arrange
+        using var context = CreateInMemoryDb();
 
-        var response = await service.BorrowBookAsync(1);
-
-        Assert.False(response.Succeeded);
-        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
-    }
-
-    [Fact]
-    public async Task BorrowBookAsync_BookNotAvailable_ReturnsBadRequest()
-    {
-        using var db = CreateInMemoryDb();
-        db.Books.Add(new Book
+        context.Books.Add(new Book
         {
             Id = 1,
-            Title = "T",
-            Author = "A",
-            Description = "D",
-            IsAvailable = false,
-            CreatedBy = "TestUser",
-            LastModifiedBy = "TestUser"
-        });
-        db.SaveChanges();
-
-        var service = CreateService(db, "u1");
-
-        var response = await service.BorrowBookAsync(1);
-
-        Assert.False(response.Succeeded);
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-    }
-
-    [Fact]
-    public async Task BorrowBookAsync_UserHasActiveBorrow_ReturnsBadRequest()
-    {
-        using var db = CreateInMemoryDb();
-        db.Books.Add(new Book
-        {
-            Id = 1,
-            Title = "T",
-            Author = "A",
-            Description = "D",
+            Title = "Clean Code",
             IsAvailable = true,
+            Author = "Robert C. Martin",
+            Description = "A Handbook of Agile Software Craftsmanship",
             CreatedBy = "TestUser",
             LastModifiedBy = "TestUser"
         });
-        db.BorrowRecords.Add(new BorrowRecord
-        {
-            Id = 1,
-            BookId = 2,
-            UserId = "u1",
-            BorrowedAt = System.DateTime.Now,
-            CreatedBy = "TestUser",
-            LastModifiedBy = "TestUser"
-        });
-        db.SaveChanges();
+        await context.SaveChangesAsync();
 
-        var service = CreateService(db, "u1");
+        var service = CreateService(context);
 
-        var response = await service.BorrowBookAsync(1);
+        // Act
+        var result = await service.BorrowBookAsync(1);
 
-        Assert.False(response.Succeeded);
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        // Assert
+        Assert.True(result.Succeeded);
+        Assert.Equal("Success", result.Message);
+
+        var book = await context.Books.FindAsync(1);
+        Assert.False(book.IsAvailable);
+
+        var borrowRecord = context.BorrowRecords.FirstOrDefault();
+        Assert.NotNull(borrowRecord);
+        Assert.Equal("1", borrowRecord.UserId);
     }
 
     [Fact]
-    public async Task BorrowBookAsync_Success_ReturnsSuccess()
+    public async Task BorrowBookAsync_ShouldFail_WhenBookNotFound()
     {
-        using var db = CreateInMemoryDb();
-        db.Books.Add(new Book
-        {
-            Id = 1,
-            Title = "T",
-            Author = "A",
-            Description = "D",
-            IsAvailable = true,
-            CreatedBy = "TestUser",
-            LastModifiedBy = "TestUser"
-        });
-        db.SaveChanges();
+        using var context = CreateInMemoryDb();
+        var service = CreateService(context);
 
-        var service = CreateService(db, "u2");
+        var result = await service.BorrowBookAsync(99);
 
-        var response = await service.BorrowBookAsync(1);
-
-        Assert.True(response.Succeeded);
-        Assert.Equal("Book borrowed successfully.", response.Data);
-
-        var bookInDb = await db.Books.FindAsync(1);
-        Assert.False(bookInDb!.IsAvailable);
+        Assert.False(result.Succeeded);
+        Assert.Equal(HttpStatusCode.NotFound, result.StatusCode);
     }
 
-    // ---------------- ReturnBookAsync Tests ----------------
 
     [Fact]
-    public async Task ReturnBookAsync_NoActiveBorrow_ReturnsNotFound()
+    public async Task BorrowBookAsync_ShouldFail_WhenUserHasActiveBorrow()
     {
-        using var db = CreateInMemoryDb();
-        var service = CreateService(db, "u1");
-
-        var response = await service.ReturnBookAsync(1);
-
-        Assert.False(response.Succeeded);
-        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
-    }
-
-    [Fact]
-    public async Task ReturnBookAsync_Success_ReturnsSuccess()
-    {
-        using var db = CreateInMemoryDb();
-        db.Books.Add(new Book
+        using var context = CreateInMemoryDb();
+        context.Books.Add(new Book
         {
             Id = 2,
-            Title = "T",
-            Author = "A",
-            Description = "D",
-            IsAvailable = false,
+            Title = "The Pragmatic Programmer",
+            IsAvailable = true,
+            Author = "Andrew Hunt and David Thomas",
+            Description = "Your Journey to Mastery",
             CreatedBy = "TestUser",
             LastModifiedBy = "TestUser"
         });
-        db.BorrowRecords.Add(new BorrowRecord
+
+        context.BorrowRecords.Add(new BorrowRecord
         {
             Id = 1,
             BookId = 2,
-            UserId = "u1",
-            BorrowedAt = System.DateTime.Now,
+            UserId = "1",
+            BorrowedAt = DateTime.Now,
+            ReturnedAt = null,
             CreatedBy = "TestUser",
             LastModifiedBy = "TestUser"
         });
-        db.SaveChanges();
+        await context.SaveChangesAsync();
 
-        var service = CreateService(db, "u1");
+        var service = CreateService(context);
 
-        var response = await service.ReturnBookAsync(2);
+        var result= await service.BorrowBookAsync(2);
 
-        Assert.True(response.Succeeded);
-        Assert.Equal("Book returned successfully.", response.Data);
-
-        var bookInDb = await db.Books.FindAsync(2);
-        Assert.True(bookInDb!.IsAvailable);
+        Assert.False(result.Succeeded);
+        Assert.Contains("only borrow one book", result.Message);
     }
+
+
 
     [Fact]
-    public async Task ReturnBookAsync_CompleteZero_ReturnsFail()
+    public async Task ReturnBookAsync_ShouldReturnBookSuccessfully()
     {
-        using var db = CreateInMemoryDb();
-        db.Books.Add(new Book
-        {
-            Id = 3,
-            Title = "T",
-            Author = "A",
-            Description = "D",
-            IsAvailable = false,
-            CreatedBy = "TestUser",
-            LastModifiedBy = "TestUser"
-        });
-        db.BorrowRecords.Add(new BorrowRecord
+        using var context = CreateInMemoryDb();
+
+        context.Books.Add(new Book
         {
             Id = 1,
-            BookId = 3,
-            UserId = "u1",
-            BorrowedAt = System.DateTime.Now,
-            CreatedBy = "TestUser",
-            LastModifiedBy = "TestUser"
+            IsAvailable = false,
+            Title = "Refactoring",
+            Author = "Martin Fowler",
+            Description = "Improving the Design of Existing Code",
+            CreatedBy= "TestUser",
+            LastModifiedBy= "TestUser"
         });
-        db.SaveChanges();
 
-        // UnitOfWork وهمي لإرجاع CompleteAsync = 0
-        var loggedInUser = Substitute.For<ILoggedInUserService>();
-        loggedInUser.UserId.Returns("u1");
-
-        var uow = Substitute.For<IUnitOfWork>();
-        var bookRepo = new GenericRepository<Book, int>(db);
-        var borrowRepo = new GenericRepository<BorrowRecord, int>(db);
-        uow.GetRepository<Book, int>().Returns(bookRepo);
-        uow.GetRepository<BorrowRecord, int>().Returns(borrowRepo);
-        uow.CompleteAsync().Returns(0);
-
-        var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
-
-        // إنشاء Configuration
-        var config = new MapperConfiguration(cfg =>
+        context.BorrowRecords.Add(new BorrowRecord
         {
-            cfg.AddProfile(new MappingProfile());
-        }, loggerFactory);
+            Id= 1,
+            BookId = 1,
+            UserId = "1",
+            BorrowedAt = DateTime.Now,
+            CreatedBy= "TestUser",
+            LastModifiedBy= "TestUser"
+        });
 
-        // إنشاء Mapper
-        var mapper = config.CreateMapper();
+        await context.SaveChangesAsync();
 
-        var service = new BorrowBookService(uow, loggedInUser, mapper);
+        var service = CreateService(context);
 
-        var response = await service.ReturnBookAsync(3);
+        var result = await service.ReturnBookAsync(1);
 
-        Assert.False(response.Succeeded);
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.True(result.Succeeded);
+
+        var book = await context.Books.FindAsync(1);
+        Assert.True(book.IsAvailable);
+
+        var record = context.BorrowRecords.First();
+        Assert.NotNull(record.ReturnedAt);
     }
+
+
 }

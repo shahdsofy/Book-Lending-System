@@ -24,15 +24,15 @@ namespace Book_Lending_System.Application.Services.BorrowBook
         }
         public async Task ProcessOverdueBooksAsync()
         {
+
             logger.LogInformation($"OverdueChecker started at {DateTime.Now}");
 
-            //هيجيب اللي عدا عليهم 7 ايام او اكتر
-            //var overdueBooks = await dbContext.BorrowRecords.Include(x => x.User).Include(x => x.Book)
-            //    .Where(x => x.BorrowedAt.AddDays(7) < DateTime.Now).ToListAsync();
 
-            var overdueBooks = await unitOfWork.GetRepository<BorrowRecord,int>().GetAllAsQuerable()
+
+            //هيجيب اللي عدا عليهم 7 ايام او اكتر
+            var overdueBooks = await unitOfWork.GetRepository<BorrowRecord, int>().GetAllAsQuerable()
                 .Include(x => x.User).Include(x => x.Book)
-               .Where(x => x.BorrowedAt.AddDays(7) < DateTime.Now).ToListAsync();
+               .Where(x => x.BorrowedAt.AddDays(7) < DateTime.Now && x.ReturnedAt == null).ToListAsync();
 
             if (!overdueBooks.Any())
                 logger.LogInformation("No overdue book found");

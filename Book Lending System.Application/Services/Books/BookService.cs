@@ -7,6 +7,7 @@ using Book_Lending_System.Shared.Errors;
 using Book_Lending_System.Shared.Responses;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace Book_Lending_System.Application.Services.Books
 {
@@ -85,9 +86,9 @@ namespace Book_Lending_System.Application.Services.Books
 
         }
 
-        public Response<IEnumerable<BookDTO>> GetAllBooksAsync()
+        public async Task<Response<IEnumerable<BookDTO>>> GetAllBooksAsync()
         {
-            var books =  unitOfWork.GetRepository<Book, int>().GetAllAsQuerable()
+            var books = await unitOfWork.GetRepository<Book, int>().GetAllAsQuerable()
                                                               .Where(x => x.IsAvailable == true)
                                                               .ToListAsync();//عشان الفلتره تتم في الداتا بيز
 

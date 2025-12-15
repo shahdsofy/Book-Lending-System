@@ -73,7 +73,7 @@ namespace Book_Lending_System.Application.Services.Identity
             var user = await userManager.FindByEmailAsync(loginDTO.Email);
             if (user == null)
             {
-                return Response<UserDTO>.Fail(HttpStatusCode.Unauthorized, ErrorType.Unauthorized.ToString(), "Invalid Login!");
+                return Response<UserDTO>.Fail(HttpStatusCode.NotFound, ErrorType.NotFound.ToString(), "Not Found a user with this email");
             }
 
             

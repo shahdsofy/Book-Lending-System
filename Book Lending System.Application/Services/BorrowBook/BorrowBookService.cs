@@ -31,6 +31,7 @@ namespace Book_Lending_System.Application.Services.BorrowBook
             //عشان اعرف لو اليوزر عنده كتاب في الوقت الحالي
             var HasActivBorrowing = await repo1.GetAllAsQuerable()
                 .AnyAsync(x => x.UserId == userid && x.ReturnedAt == null);
+
             if (HasActivBorrowing)
                 return Response<string>.Fail(HttpStatusCode.BadRequest, ErrorType.BadRequest.ToString(), "You can only borrow one book at a time.");
 
