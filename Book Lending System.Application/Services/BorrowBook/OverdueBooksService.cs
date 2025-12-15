@@ -29,7 +29,7 @@ namespace Book_Lending_System.Application.Services.BorrowBook
 
 
 
-            //هيجيب اللي عدا عليهم 7 ايام او اكتر
+            //هيجيب اللي عدا عليهم 7 ايام او اكتر ولسه مرجعوش
             var overdueBooks = await unitOfWork.GetRepository<BorrowRecord, int>().GetAllAsQuerable()
                 .Include(x => x.User).Include(x => x.Book)
                .Where(x => x.BorrowedAt.AddDays(7) < DateTime.Now && x.ReturnedAt == null).ToListAsync();
